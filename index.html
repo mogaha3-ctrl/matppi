@@ -184,6 +184,7 @@ textarea{width:100%;resize:vertical}
 .wit button:hover{background:#dbe5f7}
 .pickname.wbig{font-size:38px}
 .vbtn{border:0;background:#eef3fc;border-radius:99px;font-size:12px;padding:2px 7px;cursor:pointer;vertical-align:1px}.vbtn:hover{background:#dbe5f7}
+.srclink{display:inline-block;margin-top:10px;font-size:12.5px;font-weight:700;color:#1e5bb8;text-decoration:none;border-bottom:1px dashed #9fb3d6}.srclink:hover{border-bottom-style:solid}
 .grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
 .badge{text-align:center;padding:14px 10px}
 .badge .ic{font-size:30px;filter:grayscale(1);opacity:.35}
@@ -616,8 +617,8 @@ function renderToday(){
         <div class="dish"><b>${esc(cleanDish(s.d[0]))}</b>${s.d.length>1?`<span class="sub"> · ${esc(s.d.slice(1,4).map(cleanDish).join(' · '))}</span>`:''}${prefMark(slotText(s))}</div>
         ${mn.src!=='ref'&&histNote(s.d[0],date)?`<div class="hist">📊 ${esc(histNote(s.d[0],date))}</div>`:''}</div>`).join('')}
       ${date===today&&!trip?`<div class="acts"><button class="btn pri sm" data-act="cafe">구내식당에서 ${MNAME[meal]} 먹었어요 (+10)</button></div>`:''}
-      ${trip?`<div class="hist">🧳 출장 중에는 구내식당 인증이 비활성화됩니다.</div>`:''}</div>`;
-  }else cafe=`<div class="card empty">이 끼니의 구내식당 식단 데이터가 없습니다 (휴무일이거나 기록 범위 밖).</div>`;
+      ${trip?`<div class="hist">🧳 출장 중에는 구내식당 인증이 비활성화됩니다.</div>`:''}${srcLink()}</div>`;
+  }else cafe=`<div class="card empty">이 끼니의 구내식당 식단 데이터가 없습니다 (휴무일이거나 기록 범위 밖).<br>${srcLink()}</div>`;
   // recs
   const region=trip?{r:trip.r,g:trip.g}:{r:'세종',g:''};
   const mode=ST.mode;let recs;
@@ -674,7 +675,7 @@ function renderBld(){
       <h3>${esc(bldName(b))}</h3>
       ${mn?mn.slots.map(s=>`<div class="slot"><h4>${esc(s.k)}<span>${s.p?won(s.p):''}</span></h4><div class="dish"><b>${esc(cleanDish(s.d[0]))}</b>${s.d[1]?`<span class="sub"> · ${esc(cleanDish(s.d[1]))}</span>`:''}${prefMark(slotText(s))}</div></div>`).join(''):'<div class="hist">이 끼니는 식단 정보가 없습니다. (운영하지 않거나 판독 범위 밖)</div>'}
       <div class="acts">${mine?'':`<button class="btn ghost sm" data-act="setbld" data-v="${b}">내 식당으로 설정</button>`}</div></article>`;}).join('');
-  root.innerHTML=`<div class="bubble"><div><div class="who">맛삐</div><div class="msg">입맛을 알려 주면 <b>청사 12개 식당</b> 중 오늘 가장 어울리는 한 곳을 뽑아 드릴게요. 좋아하는 음식은 ❤️, 싫어하는 음식은 ⚠️로 표시됩니다.</div></div></div>
+  root.innerHTML=`<div class="bubble"><div><div class="who">맛삐</div><div class="msg">입맛을 알려 주면 <b>청사 12개 식당</b> 중 오늘 가장 어울리는 한 곳을 뽑아 드릴게요. 좋아하는 음식은 ❤️, 싫어하는 음식은 ⚠️로 표시됩니다.<br>${srcLink()}</div></div></div>
     ${prefCard()}
     <button class="bigdraw" data-act="draw">🎰 ${md(date)} ${MNAME[meal]} 구내식당 뽑기!</button>
     <div style="height:12px"></div>
@@ -907,6 +908,8 @@ let VA=null;
 function say(k,delay){if(!FX.isOn())return;setTimeout(()=>{try{if(VA)VA.pause();VA=new Audio('voice/'+k+'.mp3');VA.volume=.95;VA.play().catch(()=>{});}catch(e){}},delay||250);}
 function shutUp(){try{if(VA)VA.pause();}catch(e){}}
 
+const GBMO_URL='https://www.gbmo.go.kr/chungsa/dv/dietView/selectDietCalendarView.do?mi=1277&gbd=CD002';
+const srcLink=()=>`<a class="srclink" href="${GBMO_URL}" target="_blank" rel="noopener">📄 정부청사관리본부 원본 식단표 보기 ↗</a>`;
 /* ---------- 메뉴 룰렛 ---------- */
 const WCATS=['한식','중식','일식','양식','분식','아시안'];
 const WDEF=[['김치찌개','한식'],['돈가스','일식'],['칼국수','한식'],['제육볶음','한식'],['비빔밥','한식'],['짜장면','중식'],['짬뽕','중식'],['초밥','일식'],['파스타','양식'],['햄버거','양식'],['김밥','분식'],['쌀국수','아시안']];

@@ -135,6 +135,39 @@ textarea{width:100%;resize:vertical}
 .who{font-size:12px;font-weight:900;color:var(--navy);margin-bottom:2px}
 .trip{background:var(--orangebg);border:1px solid #f6c9a6;border-radius:12px;padding:10px 14px;margin-bottom:12px;font-size:14px}
 .trip b{color:var(--orange)}
+.tbanner{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap;background:linear-gradient(120deg,var(--navy),#16427f);color:#fff;border-radius:14px;padding:14px 16px;margin-bottom:10px}
+.tbanner b{font-size:16px}
+.tstep{display:flex;gap:4px;list-style:none;margin:8px 0;padding:0;font-size:12px;color:var(--mute)}
+.tstep li{flex:1;display:flex;align-items:center;gap:5px;background:#f1f3f8;border-radius:999px;padding:4px 8px;white-space:nowrap;overflow:hidden}
+.tstep li span{flex:none;width:18px;height:18px;border-radius:50%;background:#dfe4ee;color:var(--mute);display:grid;place-items:center;font-size:11px;font-weight:900}
+.tstep li.ok{background:var(--greenbg);color:var(--green)}.tstep li.ok span{background:var(--green);color:#fff}
+.tstep li.now{background:var(--orangebg);color:var(--orange);font-weight:700}.tstep li.now span{background:var(--orange);color:#fff}
+@media (max-width:560px){.tstep li{font-size:10.5px;padding:4px 5px;gap:3px}}
+.paste summary{cursor:pointer;font-weight:700;font-size:14px}.paste summary small{color:var(--mute);font-weight:500}
+.paste textarea{width:100%;margin:8px 0;border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit;font-size:14px}
+.b .x{border:0;background:none;padding:0 0 0 2px;color:var(--mute);font-weight:900}
+.tcard.open{border-color:var(--orange);box-shadow:0 0 0 2px var(--orangebg)}
+.tday{border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:10px;background:#fbfcfe}
+.tday-h{font-weight:900;color:var(--navy);margin-bottom:6px}
+.tslot{border-left:4px solid var(--line);padding:6px 0 6px 10px;margin:8px 0}
+.tslot.hub{border-color:var(--blue)}.tslot.site{border-color:var(--orange)}.tslot.stay{border-color:var(--gold)}.tslot.sejong,.tslot.home{border-color:#c9d2e3;opacity:.85}
+.tslot-h{font-size:14px;font-weight:700}.tslot-h .tm{display:inline-block;background:var(--navy);color:#fff;border-radius:6px;padding:0 6px;font-size:12px;margin-right:2px}
+.twhy{font-size:12px;color:var(--mute);margin:2px 0 4px}
+.tshop{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:6px 0}
+.tshop.on{border-color:var(--green);background:var(--greenbg)}
+.tshop-h{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.tmenu{font-size:13px;margin-top:2px}
+.tshop .acts{margin-top:6px}
+.meter{background:#fff;border:1px dashed var(--line);border-radius:10px;padding:6px 10px;margin:4px 0 6px}
+.meter-t{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:12.5px;color:var(--mute)}.meter-t b{color:var(--ink)}
+.meter-b{height:8px;background:#eef1f6;border-radius:99px;overflow:hidden;margin-top:4px}.meter-b i{display:block;height:100%;background:var(--green);border-radius:99px}.meter-b i.over{background:var(--orange)}
+.receipt{position:relative;background:#fffdf7;border:1px solid #eadfc4;border-top:4px dashed #eadfc4;border-radius:6px;padding:14px 16px;font-size:13.5px}
+.rc-h{font-weight:900;font-size:15px;color:var(--navy)}.rc-h small{font-weight:500;color:var(--mute);margin-left:6px}
+.rc-t{font-weight:700;margin:2px 0 8px;padding-right:70px}
+.receipt table{width:100%;border-collapse:collapse}.receipt th{text-align:left;color:var(--mute);font-weight:500;width:96px;padding:4px 0;vertical-align:top;border-bottom:1px dashed #e7dcc2}.receipt td{padding:4px 0;border-bottom:1px dashed #e7dcc2}
+.rc-f{margin:10px 0 4px;font-weight:700;color:var(--green)}
+.stamp{position:absolute;right:14px;top:12px;border:3px solid var(--red);color:var(--red);border-radius:50%;width:64px;height:64px;display:grid;place-items:center;text-align:center;font-weight:900;font-size:13px;line-height:1.15;transform:rotate(-14deg);opacity:.85}
+.tmap table{width:100%;border-collapse:collapse;font-size:13.5px}.tmap th,.tmap td{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left}.tmap th{color:var(--navy)}
 .days{display:flex;gap:6px;overflow-x:auto;margin-bottom:8px;padding-bottom:2px}
 .days .chip{flex:none;text-align:center;line-height:1.25;padding:6px 12px}
 .days .chip small{display:block;font-size:11px;opacity:.75}
@@ -633,7 +666,7 @@ function renderToday(){
   const rg=trip?`${trip.r}${trip.g?' '+trip.g:''}`:'세종';
   const pk=ST.pick;
   $('#p-today').innerHTML=`
-    ${trip?`<div class="trip">🧳 <b>출장 중</b> · ${esc(rg)} · ${md(trip.from)}~${md(trip.to)}${trip.note?' · '+esc(trip.note):''}</div>`:(nxt?`<div class="trip">🧳 다음 출장 <b>D-${diffDays(nxt.from,today)}</b> · ${esc(nxt.r)}${nxt.g?' '+esc(nxt.g):''} (${md(nxt.from)}~${md(nxt.to)}) <button class="btn ghost sm" data-act="tripgo" data-id="${nxt.id}">출장지 맛집 미리 보기</button></div>`:'')}
+    ${trip?`<div class="trip">🧳 <b>출장 중</b> · ${esc(rg)} · ${md(trip.from)}~${md(trip.to)}${trip.note?' · '+esc(trip.note):''} <button class="btn ghost sm" data-act="tripplan" data-id="${trip.id}">오늘 식사 동선표</button></div>`:(nxt?`<div class="trip">🧳 다음 출장 <b>D-${diffDays(nxt.from,today)}</b> · ${esc(nxt.r)}${nxt.g?' '+esc(nxt.g):''} (${md(nxt.from)}~${md(nxt.to)}) <button class="btn ghost sm" data-act="tripgo" data-id="${nxt.id}">출장지 맛집 미리 보기</button></div>`:'')}
     <div class="bubble">${(()=>{const c=cameo();return skinSVG(c.k,40)+`<div><div class="who">맛삐 <button class="vbtn" data-act="say" aria-label="맛삐 목소리 듣기">🔊</button>${c.why?` <small class="cam">· ${esc(SKINS[skinIdx(c.k)].n)} 변신! (${c.why})</small>`:''}</div>`;})()}<div class="msg">${msg}</div></div></div>
     <div class="row" style="margin-bottom:8px"><span class="lbl">내 식당</span><select id="bldSel" aria-label="내 구내식당 건물">${BLDS.map(b=>`<option value="${b}" ${b===S.bld?'selected':''}>${esc(bldName(b))}</option>`).join('')}</select><button class="btn ghost sm" data-act="gobld">건물별 한눈에 보기</button></div>
     <div class="days" role="group" aria-label="날짜">${dayChips}</div>
@@ -749,26 +782,266 @@ function openExplore(r,g,sit){
   $('#ex-sido').value=r;fillGun();renderExploreList();location.hash='explore';showTab('explore');
 }
 
-/* ---------- trips ---------- */
+/* ---------- 출장맛삐 2.0 (스마트출장앱 4단계 연계) ---------- */
+const TRIP_APP='https://trip.esaram.go.kr';
+const MEAL_ALLOW=25000; // 근무지 외 출장 식비(정액) 1일 — 인사혁신처 e-사람 스마트출장 매뉴얼 기재 기준
+const MEAL_BUDGET=Math.round(MEAL_ALLOW/3/100)*100; // 끼니당 참고 예산
+const TKINDS=[['meet','회의·협의'],['event','행사·교육'],['site','현장방문'],['audit','지도·점검·감사'],['etc','기타']];
+const TMODES=[['ktx','KTX·SRT','rail'],['bus','고속·시외버스','bus'],['air','국내항공','air'],['car','자차',''],['gov','공용차량','']];
+const HUBS=[{"k": "rail", "n": "서울역", "r": "서울", "g": "", "d": ["동자동", "봉래동", "남대문로5가", "중림동", "갈월동", "서계동", "청파동", "만리동"]}, {"k": "rail", "n": "용산역", "r": "서울", "g": "용산", "d": ["한강로"]}, {"k": "rail", "n": "수서역(SRT)", "r": "서울", "g": "강남", "d": ["수서동", "일원동", "자곡동"]}, {"k": "rail", "n": "청량리역", "r": "서울", "g": "동대문", "d": ["전농동", "용두동", "청량리동"]}, {"k": "rail", "n": "광명역", "r": "경기", "g": "광명", "d": ["일직동", "소하동"]}, {"k": "rail", "n": "행신역", "r": "경기", "g": "고양", "d": ["행신동"]}, {"k": "rail", "n": "동탄역(SRT)", "r": "경기", "g": "화성", "d": ["오산동", "청계동", "영천동"]}, {"k": "rail", "n": "평택지제역", "r": "경기", "g": "평택", "d": ["지제동", "세교동"]}, {"k": "rail", "n": "천안아산역", "r": "충남", "g": "아산", "d": ["배방읍", "장재리"]}, {"k": "rail", "n": "오송역", "r": "충북", "g": "청주", "d": ["오송읍"]}, {"k": "rail", "n": "대전역", "r": "대전", "g": "동구", "d": ["정동", "중동", "소제동", "원동", "삼성동", "신안동"]}, {"k": "rail", "n": "서대전역", "r": "대전", "g": "중구", "d": ["오류동", "용두동"]}, {"k": "rail", "n": "김천구미역", "r": "경북", "g": "김천", "d": ["남면"]}, {"k": "rail", "n": "동대구역", "r": "대구", "g": "동구", "d": ["신암동", "신천동"]}, {"k": "rail", "n": "신경주역", "r": "경북", "g": "경주", "d": ["건천읍"]}, {"k": "rail", "n": "울산역", "r": "울산", "g": "울주", "d": ["삼남읍"]}, {"k": "rail", "n": "부산역", "r": "부산", "g": "동구", "d": ["초량동", "수정동"]}, {"k": "rail", "n": "포항역", "r": "경북", "g": "포항", "d": ["흥해읍"]}, {"k": "rail", "n": "마산역", "r": "경남", "g": "마산회원", "d": ["석전동", "회원동"]}, {"k": "rail", "n": "진주역", "r": "경남", "g": "진주", "d": ["가좌동"]}, {"k": "rail", "n": "익산역", "r": "전북", "g": "익산", "d": ["창인동", "평화동", "중앙동", "주현동"]}, {"k": "rail", "n": "전주역", "r": "전북", "g": "전주", "d": ["우아동"]}, {"k": "rail", "n": "광주송정역", "r": "광주·전남", "g": "광산", "d": ["송정동"]}, {"k": "rail", "n": "목포역", "r": "광주·전남", "g": "목포", "d": ["호남동", "영해동"]}, {"k": "rail", "n": "순천역", "r": "광주·전남", "g": "순천", "d": ["조례동", "덕월동", "풍덕동"]}, {"k": "rail", "n": "여수엑스포역", "r": "광주·전남", "g": "여수", "d": ["덕충동", "공화동"]}, {"k": "rail", "n": "강릉역", "r": "강원", "g": "강릉", "d": ["교동"]}, {"k": "rail", "n": "안동역", "r": "경북", "g": "안동", "d": ["송현동"]}, {"k": "bus", "n": "서울고속버스터미널", "r": "서울", "g": "서초", "d": ["반포동"]}, {"k": "bus", "n": "동서울터미널", "r": "서울", "g": "광진", "d": ["구의동"]}, {"k": "bus", "n": "서울남부터미널", "r": "서울", "g": "서초", "d": ["서초동"]}, {"k": "bus", "n": "대전복합터미널", "r": "대전", "g": "동구", "d": ["용전동"]}, {"k": "bus", "n": "동대구터미널", "r": "대구", "g": "동구", "d": ["신천동", "신암동"]}, {"k": "bus", "n": "부산종합터미널(노포)", "r": "부산", "g": "금정", "d": ["노포동"]}, {"k": "bus", "n": "부산서부터미널(사상)", "r": "부산", "g": "사상", "d": ["괘법동"]}, {"k": "bus", "n": "광주종합터미널", "r": "광주·전남", "g": "서구", "d": ["광천동"]}, {"k": "bus", "n": "청주고속터미널", "r": "충북", "g": "청주", "d": ["가경동"]}, {"k": "bus", "n": "전주고속터미널", "r": "전북", "g": "전주", "d": ["금암동"]}, {"k": "bus", "n": "강릉터미널", "r": "강원", "g": "강릉", "d": ["홍제동"]}, {"k": "air", "n": "김포공항", "r": "서울", "g": "강서", "d": ["공항동", "방화동", "과해동"]}, {"k": "air", "n": "제주공항", "r": "제주", "g": "제주시", "d": ["용담", "도두"]}, {"k": "air", "n": "김해공항", "r": "부산", "g": "강서", "d": ["대저"]}, {"k": "air", "n": "대구공항", "r": "대구", "g": "동구", "d": ["지저동", "검사동"]}, {"k": "air", "n": "광주공항", "r": "광주·전남", "g": "광산", "d": ["신촌동", "송정동"]}, {"k": "air", "n": "청주공항", "r": "충북", "g": "청주", "d": ["내수읍"]}];
+const HUBIC={rail:'🚉',bus:'🚌',air:'✈️'};
+const tkName=k=>(TKINDS.find(x=>x[0]===k)||['','출장'])[1];
+const tmode=k=>TMODES.find(x=>x[0]===k)||TMODES[0];
+const hubOf=n=>HUBS.find(h=>h.n===n);
+const hm=s=>{const m=/^(\d{1,2}):(\d{2})/.exec(s||'');return m?+m[1]*60+(+m[2]):null;};
+const SETTLEQ={id:'t-settle',t:'출장 맛 결산',xp:50};
+const CLEANQ={id:'d-clean',t:'청렴 한 끼',d:'점검·감사 출장 중 착한가격업소 1곳 인증(식사는 각자 계산)',xp:50,goal:1,c:L=>L.filter(l=>hasT(l,'G')&&l.r!=='세종').length};
+let DBMAP=null;
+const shopByKey=k=>{if(!DBMAP){DBMAP=new Map();DB.forEach(e=>DBMAP.set(skey(e),e));}return DBMAP.get(k);};
+const addrTok=a=>String(a||'').split(/[\s,()·]+/).filter(Boolean);
+function hubShops(h){
+  const near=DB.filter(e=>e.r===h.r&&(!h.g||e.a.includes(h.g))&&addrTok(e.a).some(t=>h.d.some(x=>t.startsWith(x))));
+  if(near.length>=3)return {list:near,why:HUBIC[h.k]+' '+h.n+' 동네'};
+  const gun=h.g?DB.filter(e=>e.r===h.r&&e.a.includes(h.g)):[];
+  if(gun.length>=3)return {list:gun,why:h.n+'과 같은 시군구'};
+  return {list:DB.filter(e=>e.r===h.r),why:h.r+' 지역'};
+}
+function tripDays(tr){const out=[];let d=tr.from;while(d<=tr.to&&out.length<10){out.push(d);d=addDays(d,1);}return out;}
+function tripDests(tr){return [{r:tr.r,g:tr.g||''},...(tr.dests||[])];}
+/* 끼니별 장소: sejong(출발 전·귀가 후) · hub(역·터미널 동네) · site(출장지) · stay(숙소 근처) · home(귀가) */
+function tripSlots(tr){
+  const days=tripDays(tr),n=days.length,arr=hm(tr.arr)??630,ret=hm(tr.ret)??1020;
+  const hub=hubOf(tr.hub),HB=hub?'hub':'site',out=[];
+  days.forEach((d,i)=>{
+    const first=i===0,last=i===n-1,dest=tripDests(tr)[i%tripDests(tr).length];
+    const add=(m,p,lab)=>out.push({d,i,m,p,lab,dest,key:d+'|'+m});
+    if(first)add('조','sejong','출발 전 · 세종에서 든든히');else add('조','stay','숙소 근처 아침');
+    if(first&&arr>780)add('중','sejong','세종에서 점심 먹고 출발');
+    else if(last&&ret<720)add('중','sejong','세종 복귀 후 점심');
+    else if(first&&arr>=660)add('중',HB,hub?'도착하자마자 '+hub.n+' 동네':'현지 도착 후 점심');
+    else if(last&&ret<810)add('중',HB,hub?'귀경 전 '+hub.n+' 동네':'귀경 전 현지 점심');
+    else add('중','site','현지 점심');
+    if(last)add('석',ret>=1110?HB:'home',ret>=1110?(hub?'귀경 전 '+hub.n+' 동네 저녁':'귀경 전 현지 저녁'):'세종 귀가 후');
+    else add('석','stay','숙소 근처 저녁');
+  });
+  return out;
+}
+const BKW=['국밥','해장','백반','김밥','죽','토스트','샌드위치','국수','설렁탕','곰탕','순대','콩나물','베이글','빵','베이커리','분식','우동','라면','김치찌개','된장','순두부','정식'];
+const CAFE=/커피|카페|베이커리|빵|제과|디저트|아이스크림|떡/;
+function slotPool(tr,sl){
+  let base,why;
+  if(sl.p==='hub'){const h=hubShops(hubOf(tr.hub));base=h.list;why=h.why;}
+  else if(sl.p==='stay'){base=regionList(tr.sr||tr.r,tr.sg??tr.g);why='숙소 근처('+((tr.sg??tr.g)||tr.sr||tr.r)+')';}
+  else {base=regionList(sl.dest.r,sl.dest.g);why='출장지('+(sl.dest.g||sl.dest.r)+')';}
+  if(!base.length){base=regionList(sl.dest.r,'');why=sl.dest.r+' 지역';}
+  return {base,why};
+}
+function slotRecs(tr,sl){
+  const {base,why}=slotPool(tr,sl),seed=((tr.seed||{})[sl.key]||0),pax=+tr.pax||1;
+  let pool=base;
+  if(sl.m==='조'){const b=base.filter(e=>BKW.some(k=>stxt(e).includes(k)));if(b.length>=3)pool=b;}
+  else{const b=base.filter(e=>!(e.c==='기타'&&CAFE.test(stxt(e))));if(b.length>=3)pool=b;}
+  const prefL=(S.prefs&&S.prefs.likes)||[],prefD=(S.prefs&&S.prefs.dislikes)||[];
+  const sc=pool.map(e=>{
+    const p=minPrice(e),t=stxt(e);let s=(e.t.includes('B')?1:0)+(e.t.includes('A')?.5:0)+(e.t.includes('G')?.5:0)+(e.m.length?.3:0)+ratingBonus(e);
+    if(p!==null&&p<=MEAL_BUDGET)s+=1;
+    if(tr.kind==='audit'&&e.t.includes('G'))s+=1.2;
+    if(pax>=4&&SIT.team){const x=sitScore(e,'team');if(x)s+=x.s*.5;}
+    if(pax===1&&sl.m==='중'&&SIT.solo){const x=sitScore(e,'solo');if(x)s+=x.s*.3;}
+    if(prefL.some(k=>t.includes(k)))s+=1;
+    if(prefD.some(k=>t.includes(k)))s-=3;
+    s+=(hashStr(tr.id+sl.key+seed+skey(e))%100)/100*1.6;
+    return {e,s};
+  }).sort((a,b)=>b.s-a.s);
+  return {list:sc.slice(0,3).map(x=>x.e),why,n:pool.length};
+}
+const slotNeedsPick=sl=>sl.p!=='sejong'&&sl.p!=='home';
+function tripStage(tr){
+  const sl=tripSlots(tr).filter(slotNeedsPick),plan=tr.plan||{};
+  const picked=sl.filter(s=>plan[s.key]).length,L=tripLogs(tr);
+  const st=S.claimed['t-settle@'+tr.id]?4:L.length?3:picked?2:1;
+  return {st,picked,total:sl.length,logs:L.length};
+}
+function tripLogs(tr){return S.log.filter(l=>l.d>=tr.from&&l.d<=tr.to&&l.t!=='C');}
+function stepper(st){
+  const L=['출장 등록','식사 동선표','현지 인증','맛 결산'];
+  return `<ol class="tstep">${L.map((x,i)=>`<li class="${i+1<st?'ok':i+1===st?'now':''}"><span>${i+1<st?'✓':i+1}</span>${x}</li>`).join('')}</ol>`;
+}
+function planShopRow(tr,sl,e,picked){
+  const p=minPrice(e),today=sl.d===ymd(),done=S.log.some(l=>l.d===sl.d&&l.n===e.n&&l.r===e.r&&l.m===sl.m);
+  const mp='https://map.naver.com/p/search/'+encodeURIComponent(e.n+' '+(e.a||e.r));
+  return `<div class="tshop${picked?' on':''}">
+    <div class="tshop-h"><b>${esc(e.n)}</b> ${e.t.split('').map(x=>`<span class="b ${x}">${TAGNAME[x]}</span>`).join('')}<span class="b cat">${esc(e.c)}</span>${p!==null&&p<=MEAL_BUDGET?'<span class="b why">끼니 예산 안</span>':''}</div>
+    <div class="addr">${esc(e.a)}</div>
+    ${e.m.length?`<div class="tmenu">${e.m.slice(0,2).map(m=>`${esc(m[0])} <b>${won(m[1])}</b>`).join(' · ')}</div>`:''}
+    <div class="acts">${picked?`<button class="btn ghost sm" data-act="tpunpick" data-id="${tr.id}" data-k="${esc(sl.key)}">다른 곳으로 바꾸기</button>${today?`<button class="btn pri sm" data-act="tpci" data-id="${tr.id}" data-k="${esc(sl.key)}" ${done?'disabled':''}>${done?'인증 완료':MNAME[sl.m]+' 인증'}</button>`:''}`
+      :`<button class="btn pri sm" data-act="tppick" data-id="${tr.id}" data-k="${esc(sl.key)}" data-s="${esc(skey(e))}">동선표에 담기</button>`}<a class="btn ghost sm" href="${mp}" target="_blank" rel="noopener">지도</a></div></div>`;
+}
+function planHTML(tr){
+  const slots=tripSlots(tr),plan=tr.plan||{},byDay={};
+  slots.forEach(s=>(byDay[s.d]=byDay[s.d]||[]).push(s));
+  const inSejong=tr.r==='세종';
+  const days=Object.keys(byDay).map((d,i)=>{
+    let sum=0,cnt=0;
+    const rows=byDay[d].map(sl=>{
+      const ic={sejong:'🏢',home:'🏠',hub:HUBIC[(hubOf(tr.hub)||{}).k]||'📍',site:'📍',stay:'🏨'}[sl.p];
+      let body='';
+      if(sl.p==='sejong'){const mn=MENU?menuFor(d,sl.m):null;body=`<div class="addr">${mn?'구내식당('+esc(bldName(S.bld))+'): '+esc(mn.slots.map(s=>mainOf(s.d[0])).filter(Boolean).slice(0,3).join(', ')):'세종에서 해결하는 끼니예요.'}</div>`;}
+      else if(sl.p==='home')body='<div class="addr">출장지 식사 없음</div>';
+      else{
+        const k=plan[sl.key],e=k&&shopByKey(k);
+        if(e){const p=minPrice(e);if(p!==null){sum+=p;cnt++;}body=planShopRow(tr,sl,e,true);}
+        else{const r=slotRecs(tr,sl);body=`<div class="twhy">${esc(r.why)} · 후보 ${r.n}곳 중 추천</div>`+(r.list.length?r.list.map(e=>planShopRow(tr,sl,e,false)).join(''):'<div class="addr">이 지역 데이터에 맞는 식당이 없어요. 맛집 찾기에서 직접 골라 주세요.</div>')+(r.n>3?`<button class="btn ghost sm" data-act="tpreroll" data-id="${tr.id}" data-k="${esc(sl.key)}">↻ 다른 후보 보기</button>`:'');}
+      }
+      return `<div class="tslot ${sl.p}"><div class="tslot-h"><span class="tm">${MNAME[sl.m]}</span> ${ic} ${esc(sl.lab)}</div>${body}</div>`;
+    }).join('');
+    const pct=Math.min(100,Math.round(sum/MEAL_ALLOW*100));
+    const meter=inSejong?'':`<div class="meter"><div class="meter-t"><span>🍚 식비 미터</span><span>담은 끼니 대표메뉴 <b>${won(sum)}</b> / 1일 식비(정액) ${won(MEAL_ALLOW)}</span></div><div class="meter-b"><i style="width:${pct}%" class="${sum>MEAL_ALLOW?'over':''}"></i></div></div>`;
+    return `<div class="tday"><div class="tday-h">${i+1}일차 · ${md(d)}(${WD[parse(d).getDay()]})${d===ymd()?' <span class="b A">오늘</span>':''}</div>${meter}${rows}</div>`;
+  }).join('');
+  const note=inSejong?'세종 안 출장(근무지 내)은 여비가 4시간 미만 1만원·4시간 이상 2만원 정액입니다.':`끼니 예산 약 ${won(MEAL_BUDGET)}은 1일 식비(정액) ${won(MEAL_ALLOW)}을 세 끼로 나눈 참고값입니다. 식비는 정액이라 정산 대상이 아니며, 실제 지급은 소속 기관 기준을 따릅니다.`;
+  const tip=tr.kind==='audit'?`<div class="trip">🧭 <b>청렴 한 끼</b> · 점검·감사 대상 기관과의 식사는 각자 계산이 기본이에요. 착한가격업소를 먼저 추천합니다.</div>`:'';
+  return `<div class="tplan">${tip}${days}<p class="note" style="margin:6px 0 0">${note}</p></div>`;
+}
+function settleHTML(tr){
+  const L=tripLogs(tr),days=tripDays(tr).length,t=ymd(),ended=tr.to<t,claimed=!!S.claimed['t-settle@'+tr.id];
+  const cntT=k=>new Set(L.filter(l=>hasT(l,k)).map(l=>l.r+l.n)).size;
+  const sum=L.reduce((a,l)=>a+(l.p||0),0),shops=new Set(L.map(l=>l.r+l.n)).size;
+  const plan=tr.plan||{},pk=Object.keys(plan),hit=pk.filter(k=>{const e=shopByKey(plan[k]);const [d,m]=k.split('|');return e&&L.some(l=>l.d===d&&l.m===m&&l.n===e.n);}).length;
+  const byM=m=>L.filter(l=>l.m===m).length;
+  const rows=[['기간',`${md(tr.from)}~${md(tr.to)} (${days}일)`],['출장지',tripDests(tr).map(x=>x.r+(x.g?' '+x.g:'')).join(', ')],['출장 종류',tkName(tr.kind)],
+    ['현지 끼니 인증',`${L.length}회 (아침 ${byM('조')} · 점심 ${byM('중')} · 저녁 ${byM('석')})`],
+    ['이용한 식당',`${shops}곳 — 착한가격 ${cntT('G')} · 안심 ${cntT('A')} · 백년가게 ${cntT('B')}`],
+    ['동선표 실행',pk.length?`담은 ${pk.length}끼 중 ${hit}끼 그대로 먹음`:'동선표 없이 다녀옴'],
+    ['대표메뉴 합계',`${won(sum)} <small>(참고 · 1일 식비 정액 ${won(MEAL_ALLOW)} × ${days}일 = ${won(MEAL_ALLOW*days)})</small>`]];
+  const can=ended&&L.length>0&&!claimed;
+  return `<div class="receipt">${claimed?'<div class="stamp">결산<br>완료</div>':''}
+    <div class="rc-h">🧾 출장 맛 결산서 <small>${ended?'출장 종료':'출장 진행 중 · 중간 결산'}</small></div>
+    <div class="rc-t">${esc(tr.note||tkName(tr.kind)+' 출장')}</div>
+    <table>${rows.map(r=>`<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join('')}</table>
+    <div class="rc-f">${shops?`출장지 골목상권 <b>${shops}곳</b>에서 한 끼를 해결했어요.`:'아직 인증한 현지 식당이 없어요.'}</div>
+    <div class="acts">${can?`<button class="btn gold sm" data-act="tsettle" data-id="${tr.id}">결산 완료하고 +${SETTLEQ.xp} XP</button>`:''}${!ended?'<span class="addr">출장이 끝나면 결산 보상을 받을 수 있어요.</span>':(!L.length&&!claimed?'<span class="addr">현지 인증이 1회 이상 있어야 결산할 수 있어요.</span>':'')}<button class="btn ghost sm" data-act="tscopy" data-id="${tr.id}">결산서 복사</button></div></div>`;
+}
+function settleText(tr){
+  const L=tripLogs(tr),shops=[...new Set(L.map(l=>l.n+'('+l.r+')'))];
+  return `[출장 맛 결산서] ${tr.note||tkName(tr.kind)+' 출장'}\n기간: ${tr.from} ~ ${tr.to}\n출장지: ${tripDests(tr).map(x=>x.r+(x.g?' '+x.g:'')).join(', ')}\n현지 끼니 인증: ${L.length}회\n이용한 식당: ${shops.join(', ')||'없음'}\n— 맛집비서 맛삐 https://matppi.vercel.app`;
+}
+const TF={kind:'meet',mode:'ktx',dests:[]};
+function hubOpts(mode,r){
+  const k=tmode(mode)[2];if(!k)return '';
+  const hs=HUBS.filter(h=>h.k===k).sort((a,b)=>(a.r===r?0:1)-(b.r===r?0:1));
+  return '<option value="">선택 안 함</option>'+hs.map(h=>`<option ${h.r===r?'':'class="far"'}>${esc(h.n)}</option>`).join('');
+}
 function renderTrips(){
   const root=$('#p-trip'),t=ymd();
   const sidoOpts=SIDO.map(s=>`<option>${s}</option>`).join('');
+  const trips=S.trips.slice().sort((a,b)=>a.from.localeCompare(b.from));
+  if(ST.tripOpen!=='__none'&&(!ST.tripOpen||!S.trips.some(x=>x.id===ST.tripOpen))){const c=tripOn(t)||tripNext()||trips.filter(x=>x.to<t).slice(-1)[0];ST.tripOpen=c?c.id:null;}
   root.innerHTML=`
-   <div class="bubble"><div><div class="who">맛삐</div><div class="msg">출장 일정을 등록하면 <b>그 기간에는 자동으로 출장지 맛집</b>을 추천해 드려요. 구내식당 식단과 현지 메뉴도 이어서 보여 드립니다.</div></div></div>
+   <div class="tbanner"><div><div class="eyebrow">출장맛삐 2.0 · 스마트출장앱 연계</div><b>이동과 잠은 스마트출장앱이, 밥은 출장맛삐가.</b><div class="addr" style="color:#cfe0ff">스마트출장앱의 출장 신청 → 예약 → 정산 흐름을 그대로 따라 끼니까지 챙겨 드려요.</div></div>
+    <a class="btn gold sm" href="${TRIP_APP}" target="_blank" rel="noopener">스마트출장앱 열기 ↗</a></div>
+   ${stepper(0)}
+   <div class="sec">STEP 1 · 출장 등록 <small>스마트출장앱 출장신청서와 같은 항목</small></div>
    <div class="card" style="display:grid;gap:10px">
+     <details class="paste"><summary>📋 e-사람·스마트출장앱 출장 내역 붙여넣기 <small>날짜·출장지 자동 인식</small></summary>
+       <textarea id="tr-paste" rows="3" placeholder="예) 지방세 현장점검  출장기간 : 2026.12.03 ~ 2026.12.04  부산광역시 동구"></textarea>
+       <div class="row"><button class="btn ghost sm" data-act="tpaste">읽어 오기</button><span class="addr">입력한 글은 이 기기에서만 쓰이고 저장되지 않아요.</span></div></details>
+     <div class="row"><span class="lbl">출장종류</span>${TKINDS.map(k=>`<button class="chip" data-act="tkind" data-v="${k[0]}" aria-pressed="${TF.kind===k[0]}">${k[1]}</button>`).join('')}</div>
+     <div class="row"><span class="lbl">출장명</span><input type="text" id="tr-note" maxlength="40" placeholder="예: 지방세 현장점검" style="flex:1;min-width:180px"></div>
      <div class="row"><span class="lbl">기간</span><input type="date" id="tr-from" value="${t}"><span>~</span><input type="date" id="tr-to" value="${t}"></div>
-     <div class="row"><span class="lbl">출장지</span><select id="tr-sido">${sidoOpts}</select><select id="tr-gun"></select></div>
-     <div class="row"><span class="lbl">메모</span><input type="text" id="tr-note" maxlength="40" placeholder="예: 지방세 현장점검"><button class="btn pri" data-act="tradd">출장 등록</button></div>
+     <div class="row"><span class="lbl">출장지</span><select id="tr-sido">${sidoOpts}</select><select id="tr-gun"></select><button class="btn ghost sm" data-act="tdestadd">＋ 이곳 담고 목적지 추가</button></div>
+     <div id="tr-dests" class="row" style="${TF.dests.length?'':'display:none'}"><span class="lbl">경로</span>${TF.dests.map((x,i)=>`<span class="b cat">${i+1}. ${esc(x.r+(x.g?' '+x.g:''))} <button class="x" data-act="tdestdel" data-v="${i}" aria-label="목적지 삭제">×</button></span>`).join(' → ')} → <span class="addr">${TF.dests.length+1}. 지금 고른 곳</span></div>
+     <div class="row"><span class="lbl">교통</span><select id="tr-mode">${TMODES.map(m=>`<option value="${m[0]}" ${TF.mode===m[0]?'selected':''}>${m[1]}</option>`).join('')}</select><select id="tr-hub"></select></div>
+     <div class="row"><span class="lbl">시각</span><label class="addr">현지 도착 <input type="time" id="tr-arr" value="10:30"></label><label class="addr">귀경 출발 <input type="time" id="tr-ret" value="17:00"></label></div>
+     <div class="row"><span class="lbl">숙소</span><select id="tr-sg"></select><span class="lbl">인원</span><input type="number" id="tr-pax" min="1" max="20" value="1" style="width:64px"><span class="addr">명(나 포함)</span></div>
+     <div class="row" style="justify-content:flex-end"><button class="btn pri" data-act="tradd">출장 등록하고 식사 동선표 만들기</button></div>
    </div>
-   <div class="sec">내 출장 일정</div>
-   <div id="tr-list" style="display:grid;gap:8px">${S.trips.length?S.trips.slice().sort((a,b)=>a.from.localeCompare(b.from)).map(tr=>{
-      const favN=Object.keys(S.fav).filter(k=>k.startsWith(tr.r+'|')).length,on=tr.from<=t&&t<=tr.to,past=tr.to<t;
-      return `<div class="card" style="${past?'opacity:.6':''}"><div class="row" style="justify-content:space-between"><div><b>${esc(tr.r)}${tr.g?' '+esc(tr.g):''}</b> <span class="addr">${md(tr.from)}~${md(tr.to)}${tr.note?' · '+esc(tr.note):''}</span></div><span class="b ${on?'A':'cat'}">${on?'출장 중':past?'종료':'D-'+diffDays(tr.from,t)}</span></div>
-      <div class="acts"><button class="btn pri sm" data-act="tripgo" data-id="${tr.id}">출장지 맛집 보기</button><button class="btn ghost sm" data-act="tripfav" data-id="${tr.id}">${esc(tr.r)} 찜 ${favN}곳</button><button class="btn ghost sm" data-act="trdel" data-id="${tr.id}" style="color:var(--red)">삭제</button></div></div>`;}).join(''):'<div class="card empty">등록된 출장이 없습니다.</div>'}</div>
-   <div class="sec">출장 팁 <small>맛삐의 활용법</small></div>
-   <div class="card" style="font-size:13px;display:grid;gap:4px"><div>• 출장 전날 <b>맛집 찾기</b>에서 ★찜 해두면 현지에서 바로 꺼내 볼 수 있어요.</div><div>• 착한가격업소·백년가게는 대표메뉴 가격으로 1식 예산을 가늠할 수 있어요.</div><div>• 출장 중 인증하면 <b>"출장 한 끼" 퀘스트</b> 보상이 쌓입니다.</div><div>• 여비·업무추진비 집행은 소속 기관 기준을 따르세요. 맛삐는 가격 정보만 제공합니다.</div></div>`;
-  const fg=()=>{const s=$('#tr-sido').value;const gs=[...(GUN[s]||[])].filter(Boolean).sort((a,b)=>a.localeCompare(b,'ko'));$('#tr-gun').innerHTML='<option value="">전체 시군구</option>'+gs.map(x=>`<option>${esc(x)}</option>`).join('');};
-  $('#tr-sido').value='서울';fg();$('#tr-sido').onchange=fg;
+   <div class="sec">내 출장 <small>STEP 2 식사 동선표 · STEP 3 현지 인증 · STEP 4 맛 결산</small></div>
+   <div id="tr-list" style="display:grid;gap:10px">${trips.length?trips.map(tr=>{
+      const on=tr.from<=t&&t<=tr.to,past=tr.to<t,open=ST.tripOpen===tr.id,sg=tripStage(tr),hub=hubOf(tr.hub);
+      return `<div class="card tcard${open?' open':''}" style="${past&&!open?'opacity:.75':''}">
+       <div class="row" style="justify-content:space-between"><div><span class="b cat">${esc(tkName(tr.kind))}</span> <b>${esc(tripDests(tr).map(x=>x.r+(x.g?' '+x.g:'')).join(' → '))}</b><div class="addr">${md(tr.from)}~${md(tr.to)}${tr.note?' · '+esc(tr.note):''}${tr.mode?' · '+esc(tmode(tr.mode)[1]):''}${hub?' · '+HUBIC[hub.k]+esc(hub.n):''}${(+tr.pax||1)>1?' · '+tr.pax+'명':''}</div></div><span class="b ${on?'A':'cat'}">${on?'출장 중':past?'종료':'D-'+diffDays(tr.from,t)}</span></div>
+       ${stepper(sg.st)}
+       <div class="acts"><button class="btn ${open?'ghost':'pri'} sm" data-act="topen" data-id="${tr.id}">${open?'접기':'식사 동선표 · 결산서'}</button><button class="btn ghost sm" data-act="tripgo" data-id="${tr.id}">출장지 맛집 전체</button><button class="btn ghost sm" data-act="trdel" data-id="${tr.id}" style="color:var(--red)">삭제</button></div>
+       ${open?`<div class="sec" style="margin-top:12px">STEP 2 · 식사 동선표 <small>${sg.picked}/${sg.total}끼 담음</small></div>${planHTML(tr)}<div class="sec">STEP 4 · 출장 맛 결산 <small>정산처럼 자동으로 모아요</small></div>${settleHTML(tr)}`:''}</div>`;}).join(''):'<div class="card empty">등록된 출장이 없습니다. 위에서 출장을 등록하면 식사 동선표가 바로 만들어져요.</div>'}</div>
+   <div class="sec">스마트출장앱과 함께 쓰는 법</div>
+   <div class="card tmap"><table><tr><th>스마트출장앱</th><th>출장맛삐</th></tr>
+    <tr><td>① 출장신청서 작성</td><td>출장 등록 (같은 항목, 붙여넣기 인식)</td></tr>
+    <tr><td>② 통합검색 · 교통·숙박 예약</td><td>식사 동선표 (도착역·숙소 동네 기준 끼니 추천)</td></tr>
+    <tr><td>③ 정산 자동 반영</td><td>현지 인증 · 출장 퀘스트</td></tr>
+    <tr><td>④ 디브레인 지출 연계</td><td>출장 맛 결산서</td></tr></table>
+    <p class="note" style="margin:8px 0 0">스마트출장앱(인사혁신처)은 모바일공무원증으로 로그인합니다. 출장맛삐는 그 앱과 데이터를 직접 주고받지 않으며, 같은 항목 구조와 붙여넣기로 다시 입력하는 수고를 줄입니다. "역 동네"는 거리 계산이 아니라 주소의 동(읍·면) 기준입니다.</p></div>`;
+  const sgun=(sel,r,val,all)=>{const gs=[...(GUN[r]||[])].filter(Boolean).sort((a,b)=>a.localeCompare(b,'ko'));$(sel).innerHTML=`<option value="">${all}</option>`+gs.map(x=>`<option>${esc(x)}</option>`).join('');$(sel).value=val||'';};
+  const fh=()=>{const m=$('#tr-mode').value,r=$('#tr-sido').value,el=$('#tr-hub');el.innerHTML=hubOpts(m,r);el.style.display=tmode(m)[2]?'':'none';const f=HUBS.find(h=>h.k===tmode(m)[2]&&h.r===r);el.value=TF.hub&&hubOf(TF.hub)&&hubOf(TF.hub).k===tmode(m)[2]?TF.hub:(f?f.n:'');};
+  const fg=()=>{const r=$('#tr-sido').value;sgun('#tr-gun',r,TF.g,'전체 시군구');sgun('#tr-sg',r,TF.sg??TF.g,'숙소: 출장지와 같음');fh();};
+  $('#tr-sido').value=TF.r||'서울';fg();
+  ['note','from','to','arr','ret','pax'].forEach(k=>{if(TF[k]!=null)$('#tr-'+k).value=TF[k];});
+  $('#tr-sido').onchange=()=>{TF.r=$('#tr-sido').value;TF.g='';TF.sg=undefined;TF.hub='';fg();};
+  $('#tr-gun').onchange=()=>{TF.g=$('#tr-gun').value;};
+  $('#tr-mode').onchange=()=>{TF.mode=$('#tr-mode').value;TF.hub='';fh();};
+  $('#tr-hub').onchange=()=>{TF.hub=$('#tr-hub').value;};
+  root.querySelectorAll('#tr-note,#tr-from,#tr-to,#tr-arr,#tr-ret,#tr-pax').forEach(el=>el.oninput=()=>{TF[el.id.slice(3)]=el.value;});
+  $('#tr-sg').onchange=()=>{TF.sg=$('#tr-sg').value;};
+}
+const SIDO_ALIAS={'서울특별시':'서울','부산광역시':'부산','대구광역시':'대구','인천광역시':'인천','광주광역시':'광주·전남','대전광역시':'대전','울산광역시':'울산','세종특별자치시':'세종','경기도':'경기','강원특별자치도':'강원','강원도':'강원','충청북도':'충북','충청남도':'충남','전북특별자치도':'전북','전라북도':'전북','전라남도':'광주·전남','경상북도':'경북','경상남도':'경남','제주특별자치도':'제주','광주':'광주·전남','전남':'광주·전남'};
+function parseTripText(txt){
+  const o={};const ds=[...txt.matchAll(/(20\d{2})\s*[.\-/년]\s*(\d{1,2})\s*[.\-/월]\s*(\d{1,2})/g)].map(m=>m[1]+'-'+pad(+m[2])+'-'+pad(+m[3]));
+  if(ds[0]){o.from=ds[0];o.to=ds[1]&&ds[1]>=ds[0]?ds[1]:ds[0];}
+  const hub=HUBS.filter(h=>txt.includes(h.n.replace(/\(.*\)/,''))).sort((a,b)=>b.n.length-a.n.length)[0];
+  let best=null;
+  Object.keys(SIDO_ALIAS).concat(SIDO).forEach(k=>{const i=txt.indexOf(k);if(i>=0&&(!best||i<best.i||(i===best.i&&k.length>best.k.length)))best={i,k};});
+  o.r=best?(SIDO_ALIAS[best.k]||best.k):hub?hub.r:null;
+  if(!o.r){for(const r of SIDO){const g=[...(GUN[r]||[])].find(g=>g&&g.length>=2&&txt.includes(g));if(g){o.r=r;o.g=g;break;}}}
+  else{const g=[...(GUN[o.r]||[])].filter(g=>g&&txt.includes(g)).sort((a,b)=>b.length-a.length)[0];if(g)o.g=g;}
+  if(hub){o.hub=hub.n;o.mode=hub.k==='rail'?'ktx':hub.k;}
+  const kw=[['audit',/점검|감사|지도/],['site',/현장|방문|실사/],['event',/행사|교육|세미나|워크숍|설명회|포럼/],['meet',/회의|협의|간담회|면담/]].find(x=>x[1].test(txt));
+  if(kw)o.kind=kw[0];
+  const tm=[...txt.matchAll(/(\d{1,2}):(\d{2})/g)];if(tm[0])o.arr=pad(+tm[0][1])+':'+tm[0][2];
+  let note=txt.split(/\n/).map(x=>x.trim()).filter(Boolean)[0]||'';
+  if(hub)note=note.split(hub.n.replace(/\(.*\)/,'')).join(' ');
+  note=note.replace(/\d{1,2}\s*:\s*\d{2}/g,' ');
+  note=note.replace(/(20\d{2})\s*[.\-/년]\s*\d{1,2}\s*[.\-/월]\s*\d{1,2}\s*일?/g,'').replace(/출장\s*기간|기간|출장지|[:~()\[\]]/g,' ');
+  Object.keys(SIDO_ALIAS).concat(SIDO,o.g?[o.g]:[],hub?[hub.n.replace(/\(.*\)/,''),hub.n]:[]).forEach(k=>{if(k)note=note.split(k).join(' ');});
+  note=note.replace(/\d{1,2}\s*:\s*\d{2}/g,' ').replace(/\s(도착|출발|예정)(?=\s|$)/g,' ');
+  note=note.replace(/\s+/g,' ').trim().slice(0,40);if(note.length>=2)o.note=note;
+  return o;
+}
+function tripAct(a,b){
+  const tr=S.trips.find(x=>x.id===b.dataset.id),k=b.dataset.k;
+  switch(a){
+   case 'tkind':TF.kind=b.dataset.v;$$('[data-act=tkind]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===TF.kind));return true;
+   case 'tdestadd':{const r=$('#tr-sido').value,g=$('#tr-gun').value;if(TF.dests.length>=3){toast('목적지는 4곳까지 등록할 수 있어요.');return true;}TF.dests.push({r,g});TF.r=r;TF.g='';TF.sg=undefined;renderTrips();toast((r+(g?' '+g:''))+'을 담았어요. 다음 목적지를 고르세요.');return true;}
+   case 'tdestdel':TF.dests.splice(+b.dataset.v,1);renderTrips();return true;
+   case 'tpaste':{const txt=$('#tr-paste').value.trim();if(!txt){toast('출장 내역을 붙여 넣어 주세요.');return true;}
+     const o=parseTripText(txt);if(!o.from&&!o.r){toast('날짜나 출장지를 찾지 못했어요. 직접 입력해 주세요.');return true;}
+     Object.assign(TF,o);if(o.r)TF.sg=undefined;renderTrips();$('details.paste')&&($('details.paste').open=false);
+     toast('읽어 온 내용: '+[o.from&&(md(o.from)+'~'+md(o.to)),o.r&&(o.r+(o.g?' '+o.g:'')),o.kind&&tkName(o.kind),o.hub].filter(Boolean).join(' · ')+'. 확인 후 등록하세요.');say('tpaste');return true;}
+   case 'tradd':{
+     const from=$('#tr-from').value,to=$('#tr-to').value;
+     if(!from||!to||to<from){toast('출장 기간을 확인해 주세요.');return true;}
+     if(diffDays(to,from)>9){toast('출장 기간은 10일까지 등록할 수 있어요.');return true;}
+     const cr=$('#tr-sido').value,cg=$('#tr-gun').value,mode=$('#tr-mode').value,sg=$('#tr-sg').value;
+     const all=TF.dests.slice();const lst=all[all.length-1];if(!lst||lst.r!==cr||lst.g!==cg)all.push({r:cr,g:cg});
+     const r=all[0].r,g=all[0].g;
+     const n={id:'t'+Date.now().toString(36),from,to,r,g,note:$('#tr-note').value.trim(),kind:TF.kind,mode,hub:tmode(mode)[2]?$('#tr-hub').value:'',arr:$('#tr-arr').value||'10:30',ret:$('#tr-ret').value||'17:00',sr:cr,sg:sg||cg,pax:Math.max(1,Math.min(20,+$('#tr-pax').value||1)),dests:all.slice(1),plan:{},seed:{}};
+     S.trips.push(n);save();ST.tripOpen=n.id;Object.assign(TF,{kind:'meet',mode:'ktx',dests:[],note:'',from:null,to:null,r:null,g:'',sg:undefined,hub:'',arr:null,ret:null,pax:null});
+     toast(n.kind==='audit'?'점검·감사 출장 등록! 청렴 한 끼 퀘스트가 열립니다.':'출장을 등록했어요. 식사 동선표를 확인해 보세요.');FX.celebrate('trip');say(n.kind==='audit'?'tclean':'trip');refreshAll();
+     setTimeout(()=>{const el=document.querySelector('.tcard.open');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},80);return true;}
+   case 'topen':ST.tripOpen=ST.tripOpen===b.dataset.id?'__none':b.dataset.id;renderTrips();return true;
+   case 'tripplan':ST.tripOpen=b.dataset.id;location.hash='trip';showTab('trip');renderTrips();return true;
+  }
+  if(!tr)return false;
+  switch(a){
+   case 'tppick':{tr.plan=tr.plan||{};tr.plan[k]=b.dataset.s;save();FX.sfx('pop');
+     const sg=tripStage(tr);if(sg.picked===sg.total&&!tr.planDone){tr.planDone=1;save();toast('식사 동선표 완성!');say('tplan');FX.celebrate('checkin');}else{toast('동선표에 담았어요.');say('tpick');}
+     renderTrips();renderToday();return true;}
+   case 'tpunpick':delete tr.plan[k];save();renderTrips();return true;
+   case 'tpreroll':tr.seed=tr.seed||{};tr.seed[k]=(tr.seed[k]||0)+1;save();FX.sfx('tap');renderTrips();return true;
+   case 'tpci':{const e=shopByKey(tr.plan[k]);if(!e)return true;addLog({n:e.n,r:e.r,g:e.g,t:e.t,p:minPrice(e)||0,c:e.c,m:k.split('|')[1],s:(+tr.pax||1)>=4?'team':''});return true;}
+   case 'tsettle':{const before=rankOf(xpTotal());S.claimed['t-settle@'+tr.id]=1;save();toast('출장 맛 결산 완료! +'+SETTLEQ.xp+' XP');say('tsettle');refreshAll();const af=rankOf(xpTotal());if(af>before){onRankUp(af);FX.celebrate('rank');setTimeout(()=>toast(rankUnlockMsg(af)),2500);}else FX.celebrate('checkin');return true;}
+   case 'tscopy':{const s=settleText(tr);(navigator.clipboard?navigator.clipboard.writeText(s):Promise.reject()).then(()=>toast('결산서를 복사했어요.'),()=>{prompt('아래 내용을 복사하세요.',s);});return true;}
+  }
+  return false;
 }
 
 /* ---------- check-in ---------- */
@@ -833,6 +1106,7 @@ function pickDaily(day){
   let h=hashStr(day);const pool=DAILY.slice(),out=[];
   while(out.length<4){h=(Math.imul(h,1103515245)+12345)>>>0;out.push(pool.splice(h%pool.length,1)[0]);}
   if(tripOn(day))out[3]=TRIPQ;
+  {const tq=tripOn(day);if(tq&&tq.kind==='audit')out[2]=CLEANQ;}
   return out;
 }
 function questSet(){
@@ -843,7 +1117,7 @@ function questSet(){
 }
 function xpTotal(){
   let x=S.log.length*10+S.myRevs.reduce((a,r)=>a+20+(r.photo?20:0),0);
-  const all=[...DAILY,TRIPQ,...WEEKLY,...CAREER];
+  const all=[...DAILY,TRIPQ,CLEANQ,SETTLEQ,...WEEKLY,...CAREER];
   Object.keys(S.claimed).forEach(k=>{const q=all.find(z=>z.id===k.split('@')[0]);if(q)x+=q.xp;});
   return x;
 }
@@ -1100,6 +1374,7 @@ document.addEventListener('click',ev=>{
   const a=b.dataset.act,v=b.dataset.v;
   if(['prefadd','prefdel'].includes(a)){}else if(['date','meal','mode','exsit','extag','exmax','exfav','rvf','star','rtag','gobld','setbld'].includes(a))FX.sfx('tap');
   const shop=()=>DB[+b.dataset.i];
+  if(tripAct(a,b))return;
   switch(a){
    case 'date':ST.date=v;ST.pick=null;renderToday();renderBld();break;
    case 'meal':ST.meal=v;ST.pick=null;renderToday();renderBld();renderExploreList();break;
@@ -1117,11 +1392,6 @@ document.addEventListener('click',ev=>{
    case 'exfav':ST.ex.fav=!ST.ex.fav;b.setAttribute('aria-pressed',ST.ex.fav);renderExploreList();break;
    case 'exmax':ST.ex.max=+v;$$('[data-act=exmax]').forEach(x=>x.setAttribute('aria-pressed',x===b));ST.ex.shown=40;renderExploreList();break;
    case 'exroll':roll(ST.exList,()=>{const box=$('#ex-pick');const pk=ST.pick;box.innerHTML=pk?`<div class="card pick"><div class="t">${pk.final?'🎯 맛삐의 낙점':'🎲 고르는 중…'}</div>${shopCard(pk.e,pk.e._why)}</div>`:'';});break;
-   case 'tradd':{
-     const from=$('#tr-from').value,to=$('#tr-to').value;
-     if(!from||!to||to<from){toast('출장 기간을 확인해 주세요.');break;}
-     S.trips.push({id:'t'+Date.now().toString(36),from,to,r:$('#tr-sido').value,g:$('#tr-gun').value,note:$('#tr-note').value.trim()});save();
-     toast('출장을 등록했어요. 해당 기간엔 출장지 맛집을 추천해요.');FX.celebrate('trip');say('trip');refreshAll();break;}
    case 'trdel':confirmBox('이 출장 일정을 삭제할까요?',()=>{S.trips=S.trips.filter(t=>t.id!==b.dataset.id);save();refreshAll();});break;
    case 'tripgo':{const t=S.trips.find(x=>x.id===b.dataset.id);if(t)openExplore(t.r,t.g,'');break;}
    case 'tripfav':{const t=S.trips.find(x=>x.id===b.dataset.id);if(t){ST.ex.fav=true;$$('[data-act=exfav]').forEach(x=>x.setAttribute('aria-pressed',true));openExplore(t.r,'','');}break;}
@@ -1372,7 +1642,7 @@ function demoSeed(){
     M.push({id,d:dAgo(i*2+1),photo});
     if(photo){const p=pics[pi++%pics.length];P[id]=svg(p[0],p[1],p[2]);}});
   const fav={};[A[0],G[0],A[6],Bs[0]].forEach(e=>{if(e)fav[skey(e)]=1;});
-  S=Object.assign(S,{log:L,claimed:{'c-a5':1,'c-g10':1,'c-s3':1},trips:[{id:'tdemo1',from:dAgo(20),to:dAgo(19),r:'서울',g:'',note:'예시 출장'},{id:'tdemo2',from:dAgo(27),to:dAgo(26),r:'대전',g:'',note:'예시 출장'}],fav,myRevs:M,reviews:R,likes:{},photos:P,nick:'임규진 서기관',demo:true,votes:{},prefs:{likes:['돈까스','칼국수'],dislikes:['오이','마라']}});
+  S=Object.assign(S,{log:L,claimed:{'c-a5':1,'c-g10':1,'c-s3':1},trips:[{id:'tdemo1',from:dAgo(20),to:dAgo(19),r:'서울',g:'',note:'예시 출장 · 정책 협의',kind:'meet',mode:'ktx',hub:'서울역',arr:'10:40',ret:'18:30',sr:'서울',sg:'',pax:2,dests:[],plan:{},seed:{}},{id:'tdemo2',from:dAgo(27),to:dAgo(26),r:'대전',g:'',note:'예시 출장 · 지방세 현장점검',kind:'audit',mode:'ktx',hub:'대전역',arr:'09:50',ret:'16:30',sr:'대전',sg:'',pax:3,dests:[],plan:{},seed:{}}],fav,myRevs:M,reviews:R,likes:{},photos:P,nick:'임규진 서기관',demo:true,votes:{},prefs:{likes:['돈까스','칼국수'],dislikes:['오이','마라']}});
   try{localStorage.removeItem('matppi-demo-off');}catch(e){}
   save();buildRevMap();
 }

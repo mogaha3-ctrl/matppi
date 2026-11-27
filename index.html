@@ -842,7 +842,8 @@ function slotRecs(tr,sl){
   if(sl.m==='조'){const b=base.filter(e=>BKW.some(k=>stxt(e).includes(k)));if(b.length>=3)pool=b;}
   else{const b=base.filter(e=>!(e.c==='기타'&&CAFE.test(stxt(e))));if(b.length>=3)pool=b;}
   const prefL=(S.prefs&&S.prefs.likes)||[],prefD=(S.prefs&&S.prefs.dislikes)||[];
-  const sc=pool.map(e=>{
+  const used=new Set(Object.values(tr.plan||{}));
+  const sc=pool.filter(e=>!used.has(skey(e))||pool.length<=3).map(e=>{
     const p=minPrice(e),t=stxt(e);let s=(e.t.includes('B')?1:0)+(e.t.includes('A')?.5:0)+(e.t.includes('G')?.5:0)+(e.m.length?.3:0)+ratingBonus(e);
     if(p!==null&&p<=MEAL_BUDGET)s+=1;
     if(tr.kind==='audit'&&e.t.includes('G'))s+=1.2;
@@ -850,7 +851,7 @@ function slotRecs(tr,sl){
     if(pax===1&&sl.m==='중'&&SIT.solo){const x=sitScore(e,'solo');if(x)s+=x.s*.3;}
     if(prefL.some(k=>t.includes(k)))s+=1;
     if(prefD.some(k=>t.includes(k)))s-=3;
-    s+=(hashStr(tr.id+sl.key+seed+skey(e))%100)/100*1.6;
+    s+=(hashStr(tr.id+sl.key+seed+skey(e))%100)/100*2.4;
     return {e,s};
   }).sort((a,b)=>b.s-a.s);
   return {list:sc.slice(0,3).map(x=>x.e),why,n:pool.length};
@@ -859,7 +860,7 @@ const slotNeedsPick=sl=>sl.p!=='sejong'&&sl.p!=='home';
 function tripStage(tr){
   const sl=tripSlots(tr).filter(slotNeedsPick),plan=tr.plan||{};
   const picked=sl.filter(s=>plan[s.key]).length,L=tripLogs(tr);
-  const st=S.claimed['t-settle@'+tr.id]?4:L.length?3:picked?2:1;
+  const st=S.claimed['t-settle@'+tr.id]?5:L.length?3:picked?2:1;
   return {st,picked,total:sl.length,logs:L.length};
 }
 function tripLogs(tr){return S.log.filter(l=>l.d>=tr.from&&l.d<=tr.to&&l.t!=='C');}
@@ -1621,7 +1622,11 @@ function demoSeed(){
   [1,3].forEach(o=>cafe(o,'조'));
   [1,3,5,8,12,15].forEach((o,i)=>push(A[i*3],o,o%2?'석':'중',i===1?'solo':i===3?'dinner':''));
   [2,4,6,9,13,16,18].forEach((o,i)=>push(G[i*2],o,'중',i===0?'solo':i===3?'team':i===5?'study':''));
-  push(Bs[0],20,'중');push(Bs[1],20,'석','dinner');push(Bs[2],19,'중');push(Gs[0],20,'석');push(Gs[1],19,'석');push(Gd[0],27,'중');push(Gd[1],26,'석');
+  const TR=[{id:'tdemo3',from:addDays(today,4),to:addDays(today,5),r:'부산',g:'동구',note:'지방세 제도 설명회 (예시)',kind:'event',mode:'ktx',hub:'부산역',arr:'11:20',ret:'15:40',sr:'부산',sg:'동구',pax:4,dests:[],plan:{},seed:{}},
+   {id:'tdemo1',from:dAgo(20),to:dAgo(19),r:'서울',g:'중구',note:'정책 협의 (예시)',kind:'meet',mode:'ktx',hub:'서울역',arr:'10:40',ret:'18:40',sr:'서울',sg:'중구',pax:2,dests:[{r:'서울',g:'종로구'}],plan:{},seed:{},planDone:1},
+   {id:'tdemo2',from:dAgo(27),to:dAgo(26),r:'대전',g:'동구',note:'지방세 현장점검 (예시)',kind:'audit',mode:'ktx',hub:'대전역',arr:'09:50',ret:'16:30',sr:'대전',sg:'동구',pax:3,dests:[],plan:{},seed:{},planDone:1}];
+  TR.forEach(tr=>{const sl=tripSlots(tr).filter(slotNeedsPick);sl.forEach((x,j)=>{if(tr.id==='tdemo3'&&j>=2)return;const r=slotRecs(tr,x);const e=r.list[0];if(!e)return;tr.plan[x.key]=skey(e);
+    if(tr.id==='tdemo1'||(tr.id==='tdemo2'&&j<3))L.push({d:x.d,n:e.n,r:e.r,g:e.g||'',t:e.t,p:minPrice(e)||0,c:e.c||'',m:x.m,s:tr.pax>=4?'team':''});});});
   [11,14,17].forEach((o,i)=>push(G[20+i],o,'석'));
   L.sort((a,b)=>a.d<b.d?-1:1);
   const rv=[[A[0],5,'안심식당이라 믿고 갔는데 반찬이 정갈합니다. 점심시간 직전에 가면 대기가 짧아요.',['clean','solo'],1],
@@ -1642,7 +1647,7 @@ function demoSeed(){
     M.push({id,d:dAgo(i*2+1),photo});
     if(photo){const p=pics[pi++%pics.length];P[id]=svg(p[0],p[1],p[2]);}});
   const fav={};[A[0],G[0],A[6],Bs[0]].forEach(e=>{if(e)fav[skey(e)]=1;});
-  S=Object.assign(S,{log:L,claimed:{'c-a5':1,'c-g10':1,'c-s3':1},trips:[{id:'tdemo1',from:dAgo(20),to:dAgo(19),r:'서울',g:'',note:'예시 출장 · 정책 협의',kind:'meet',mode:'ktx',hub:'서울역',arr:'10:40',ret:'18:30',sr:'서울',sg:'',pax:2,dests:[],plan:{},seed:{}},{id:'tdemo2',from:dAgo(27),to:dAgo(26),r:'대전',g:'',note:'예시 출장 · 지방세 현장점검',kind:'audit',mode:'ktx',hub:'대전역',arr:'09:50',ret:'16:30',sr:'대전',sg:'',pax:3,dests:[],plan:{},seed:{}}],fav,myRevs:M,reviews:R,likes:{},photos:P,nick:'임규진 서기관',demo:true,votes:{},prefs:{likes:['돈까스','칼국수'],dislikes:['오이','마라']}});
+  S=Object.assign(S,{log:L,claimed:{'c-a5':1,'c-g10':1,'c-s3':1,'t-settle@tdemo1':1},trips:TR,demoV2:true,fav,myRevs:M,reviews:R,likes:{},photos:P,nick:'임규진 서기관',demo:true,votes:{},prefs:{likes:['돈까스','칼국수'],dislikes:['오이','마라']}});
   try{localStorage.removeItem('matppi-demo-off');}catch(e){}
   save();buildRevMap();
 }
@@ -1654,7 +1659,7 @@ Promise.all([fetch('data.json').then(r=>r.json()),fetch('menu.json').then(r=>r.j
   const cnt={};d.forEach(e=>{cnt[e.r]=(cnt[e.r]||0)+1;(GUN[e.r]=GUN[e.r]||new Set()).add(e.g);});
   SIDO=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]);
   buildStats();buildRevMap();
-  try{if(!S.log.length&&!S.myRevs.length&&localStorage.getItem('matppi-demo-off')!=='1')demoSeed();}catch(e){}
+  try{if((!S.log.length&&!S.myRevs.length&&localStorage.getItem('matppi-demo-off')!=='1')||(S.demo&&!S.demoV2))demoSeed();}catch(e){}
   $('#note').innerHTML=`※ 개인이 공공데이터로 만든 비공식 페이지이며, 국민비서 '구삐' 등 어떤 정부 서비스와도 무관합니다. 맛집 데이터 기준일 – 안심식당(세종) 2026.11.18 · 착한가격업소 2026.9.30 · 백년가게 2026.8.20. 휴·폐업, 메뉴·가격 변동이 있을 수 있으니 방문 전 확인하세요. 안심식당은 세종시 지정 업소만 수록했습니다.<br>구내식당 식단: 중앙동은 이번 주(11/13 변경본)와 과거 8개월치, 나머지 11개 건물은 10/26~30 주 식단표(주요 메뉴만 판독)를 반영했습니다. 과거 식단은 ${esc(MENU.hist_note)} 인증 기록·경험치·찜은 이 기기의 브라우저에만 저장됩니다.`;
   buildExplore();renderExploreList();renderWheel();renderTrips();renderQuests();renderBadges();renderReviews();renderHero();renderToday();renderBld();
   renderVote();

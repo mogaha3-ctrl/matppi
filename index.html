@@ -1206,18 +1206,18 @@ function docTripAct(a,b,tr){
   switch(a){
    case 'tripmins':ST.tsub=ST.tsub||{};ST.tsub[tr.id]='mins';ST.tripOpen=tr.id;location.hash='trip';showTab('trip');renderTrips();return true;
    case 'tsub':ST.tsub=ST.tsub||{};ST.tsub[tr.id]=b.dataset.v;ST.tripOpen=tr.id;renderTrips();FX.sfx('tap');return true;
-   case 'dopen':openDoc(tr,b.dataset.k,b.dataset.m);if(b.dataset.k==='plan'&&!docOf(tr).planViewed){docOf(tr).planViewed=1;docOf(tr).saved=1;save();FX.sfx('pop');}return true;
+   case 'dopen':openDoc(tr,b.dataset.k,b.dataset.m);if(b.dataset.k==='plan'&&!docOf(tr).planViewed){docOf(tr).planViewed=1;docOf(tr).saved=1;save();say('tdoc');}return true;
    case 'dpurp':{const s=tName(tr).replace(/\s*\(예시\)/,'')+' — '+PURPOSE(tr)[0].replace(/하고자 함$/,'').replace(/고자 함$/,'');(navigator.clipboard?navigator.clipboard.writeText(s):Promise.reject()).then(()=>toast('출장목적 문구를 복사했어요. 스마트출장앱 신청서에 붙여 넣으세요.'),()=>prompt('아래 내용을 복사하세요.',s));return true;}
    case 'minsave':{
      const g=k=>($('#mn-'+k)||{}).value||'';const o={d:g('d'),time:g('time'),place:g('place').trim(),who:g('who').trim(),topic:g('topic').trim(),body:g('body'),decide:g('decide'),todo:g('todo')};
      if(!o.topic&&!lines(o.body).length){toast('안건이나 논의 내용을 적어 주세요.');return true;}
      docOf(tr);const ed=ST.minEdit&&ST.minEdit.tid===tr.id&&tr.mins.find(x=>x.id===ST.minEdit.id);
      if(ed)Object.assign(ed,o);else tr.mins.push(Object.assign({id:'m'+Date.now().toString(36)},o));
-     ST.minEdit=null;save();toast(ed?'회의록을 고쳤어요.':'회의록 저장! 결과보고서에 자동으로 담았어요.');if(!ed)FX.sfx('pop');renderTrips();return true;}
+     ST.minEdit=null;save();toast(ed?'회의록을 고쳤어요.':'회의록 저장! 결과보고서에 자동으로 담았어요.');if(!ed){say('tmin');FX.sfx('pop');}renderTrips();return true;}
    case 'minedit':ST.minEdit={tid:tr.id,id:b.dataset.m};renderTrips();setTimeout(()=>{const f=$('.minform');f&&f.scrollIntoView({behavior:'smooth',block:'start'});},60);return true;
    case 'mincancel':ST.minEdit=null;renderTrips();return true;
    case 'mindel':confirmBox('이 회의록을 삭제할까요?',()=>{tr.mins=tr.mins.filter(x=>x.id!==b.dataset.m);save();renderTrips();toast('회의록을 삭제했어요.');});return true;
-   case 'trep':{if(S.claimed['t-report@'+tr.id])return true;const before=rankOf(xpTotal());S.claimed['t-report@'+tr.id]=1;save();toast('출장 결과보고서 완성! +'+REPORTQ.xp+' XP');say('done');refreshAll();
+   case 'trep':{if(S.claimed['t-report@'+tr.id])return true;const before=rankOf(xpTotal());S.claimed['t-report@'+tr.id]=1;save();toast('출장 결과보고서 완성! +'+REPORTQ.xp+' XP');say('trep');refreshAll();
      const af=rankOf(xpTotal());if(af>before){onRankUp(af);FX.celebrate('rank');setTimeout(()=>toast(rankUnlockMsg(af)),2500);}else FX.celebrate('checkin');return true;}
   }
   return false;
